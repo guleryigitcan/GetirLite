@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Getir Lite</string>
+    <string name="addToCart">Sepete Ekle</string>
+    <string name="suggestedItems">Önerilen Ürünler</string>
+    <string name="completeCart">Sepeti Tamamla</string>
+    <string name="productListFragmentLabel">Ürünler</string>
+    <string name="productDetailFragmentLabel">Ürün Detayı</string>
+    <string name="cartFragmentLabel">Sepetim</string>
+</resources>
