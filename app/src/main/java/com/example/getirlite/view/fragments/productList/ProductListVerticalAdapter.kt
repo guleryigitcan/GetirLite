@@ -18,7 +18,7 @@ class ProductListVerticalAdapter(private val model: CartViewModel, private val p
             binding.iconProduct.load(product.thumbnailURL) {
                 crossfade(true)
                 scale(Scale.FILL)
-                placeholder(R.drawable.market)
+                placeholder(R.drawable.ic_placeholder)
             }
 
             binding.iconProduct.clipToOutline = true

@@ -50,6 +50,8 @@ class CartViewModel @Inject constructor(private val cartDatabase: CartDatabase) 
 
     fun clearCart() {
         val list = emptyList<Product>()
+        val items = cartItems.value?.filter { it.count > 0 } ?: return
+        items.map { it.count = 0 }
         cartItems.value = list
         saveCartItems(emptyList())
     }

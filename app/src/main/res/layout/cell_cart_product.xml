@@ -13,7 +13,7 @@
         android:layout_height="74dp"
         android:layout_margin="8dp"
         android:background="@drawable/bg_product_icon"
-        tools:src="@drawable/market"
+        tools:src="@drawable/ic_placeholder"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
