@@ -15,7 +15,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val productViewModel: ProductListViewModel by viewModels()
-    val cartViewModel: CartViewModel by viewModels()
+    private val cartViewModel: CartViewModel by viewModels()
+
+    init {
+        instance = this
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,5 +32,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.topBar.set(navController, cartViewModel)
         productViewModel.fetch()
+    }
+    companion object {
+        lateinit var instance: MainActivity
     }
 }

@@ -12,6 +12,7 @@ import coil.load
 import coil.size.Scale
 import com.example.getirlite.databinding.ControllerProductDetailBinding
 import com.example.getirlite.model.product.Product
+import com.example.getirlite.view.fragments.StickyItemInteractionListener
 import com.example.getirlite.view.fragments.cart.CartFragmentDirections
 import com.example.getirlite.view.fragments.cart.CartViewModel
 import com.example.getirlite.view.fragments.productList.ProductListViewModel
@@ -19,7 +20,7 @@ import com.example.getirlite.view.fragments.productList.SuggestedProductsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProductDetailFragment: Fragment() {
+class ProductDetailFragment: Fragment(), StickyItemInteractionListener {
     private var binding: ControllerProductDetailBinding? = null
     private val model: ProductListViewModel by activityViewModels()
     private val cartViewModel: CartViewModel by activityViewModels()
@@ -51,7 +52,7 @@ class ProductDetailFragment: Fragment() {
         suggestedProductsObserver = Observer { products ->
             products.let {
                 if (it.isNotEmpty()) {
-                    suggestedProductsAdapter = SuggestedProductsAdapter(cartViewModel, it) { product ->
+                    suggestedProductsAdapter = SuggestedProductsAdapter(listener = this, products = it, getCount = cartViewModel::getCount) { product ->
                         val direction = CartFragmentDirections.actionCartFragmentToProductDetailFragment(product.id)
                         findNavController().navigate(direction)
                     }
@@ -70,5 +71,15 @@ class ProductDetailFragment: Fragment() {
         binding?.recyclerSuggestedItems?.adapter = null
         suggestedProductsAdapter = null
         binding = null
+    }
+
+    override fun onAddToCart(product: Product) {
+        cartViewModel.addToCart(product = product)
+        suggestedProductsAdapter?.notifyDataSetChanged()
+    }
+
+    override fun onRemoveFromCart(product: Product) {
+        cartViewModel.removeToCart(product = product)
+        suggestedProductsAdapter?.notifyDataSetChanged()
     }
 }

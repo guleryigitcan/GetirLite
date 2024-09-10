@@ -9,36 +9,21 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.getirlite.R
 import com.example.getirlite.databinding.ComponentStickyActionsListItemBinding
 import com.example.getirlite.model.product.Product
+import com.example.getirlite.view.fragments.StickyItemInteractionListener
 import com.example.getirlite.view.fragments.cart.CartViewModel
 
 class StickyActionsListItem(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
     val binding = ComponentStickyActionsListItemBinding.inflate(LayoutInflater.from(context), this, true)
-    private lateinit var model: CartViewModel
+    private var listener: StickyItemInteractionListener? = null
     private lateinit var product: Product
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        binding.buttonAdd.setOnClickListener { onClick(product) }
-        binding.buttonDelete.setOnClickListener {
-            model.removeToCart(product)
-            update()
-        }
-    }
-
-    fun set(cartViewModel: CartViewModel, product: Product) {
-        model = cartViewModel
+    fun set(listener: StickyItemInteractionListener, product: Product, count: Int) {
+        this.listener = listener
         this.product = product
-        update()
+        update(count)
     }
 
-    private fun onClick(product: Product) {
-        model.addToCart(product)
-        this.product = product
-        update()
-    }
-
-    private fun update() {
-        val count = model.getCount(product)
+    private fun update(count: Int) {
         binding.stickyActionsExtension.visibility = if (count > 0) VISIBLE else GONE
         binding.buttonAdd.background = if (count > 0) AppCompatResources.getDrawable(context, R.drawable.button_rounded_filled_top) else AppCompatResources.getDrawable(context, R.drawable.button_rounded_white)
 
@@ -51,6 +36,12 @@ class StickyActionsListItem(context: Context, attrs: AttributeSet?) : Constraint
             binding.iconDelete.imageTintList = ColorStateList.valueOf(context.getColor(R.color.blue))
         }
         binding.labelProductCount.text = count.toString()
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        binding.buttonAdd.setOnClickListener { listener?.onAddToCart(product) }
+        binding.buttonDelete.setOnClickListener { listener?.onRemoveFromCart(product) }
     }
 
     override fun onDetachedFromWindow() {

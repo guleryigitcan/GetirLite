@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     id ("kotlin-kapt")
     id ("dagger.hilt.android.plugin")
+    id ("com.google.dagger.hilt.android")
     id ("androidx.navigation.safeargs")
 }
 
@@ -48,6 +49,7 @@ dependencies {
     implementation (libs.androidx.core.splashscreen)
     implementation (libs.hilt.android)
     kapt (libs.hilt.compiler.v2432)
+    kapt (libs.androidx.hilt.compiler)
     implementation (libs.coil)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.retrofit)

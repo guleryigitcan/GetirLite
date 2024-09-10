@@ -10,11 +10,12 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.getirlite.databinding.ControllerProductListBinding
 import com.example.getirlite.model.product.Product
+import com.example.getirlite.view.fragments.StickyItemInteractionListener
 import com.example.getirlite.view.fragments.cart.CartViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProductListFragment: Fragment() {
+class ProductListFragment: Fragment(), StickyItemInteractionListener {
     private var binding: ControllerProductListBinding? = null
     private val model: ProductListViewModel by activityViewModels()
     private val cartViewModel: CartViewModel by activityViewModels()
@@ -23,6 +24,7 @@ class ProductListFragment: Fragment() {
 
     private lateinit var suggestedProductsObserver: Observer<List<Product>>
     private lateinit var verticalProductsObserver: Observer<List<Product>>
+    private lateinit var cartObserver: Observer<List<Product>>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = ControllerProductListBinding.inflate(inflater, container, false)
@@ -32,6 +34,7 @@ class ProductListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindView()
+        bindCartObserver()
     }
 
     private fun bindView() {
@@ -41,7 +44,7 @@ class ProductListFragment: Fragment() {
         suggestedProductsObserver = Observer { productResponse ->
             productResponse.let {
                 if (it.isNotEmpty()) {
-                    suggestedProductsAdapter = SuggestedProductsAdapter(cartViewModel, it) { product ->
+                    suggestedProductsAdapter = SuggestedProductsAdapter(listener = this, products = it, getCount = cartViewModel::getCount) { product ->
                         val direction = ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(product.id)
                         findNavController().navigate(direction)
                     }
@@ -53,7 +56,7 @@ class ProductListFragment: Fragment() {
        verticalProductsObserver = Observer{ productResponse ->
            productResponse.let {
                if (it.isNotEmpty()) {
-                   verticalAdapter = ProductListVerticalAdapter(cartViewModel, it) { product ->
+                   verticalAdapter = ProductListVerticalAdapter(listener = this, products = it, getCount = cartViewModel::getCount) { product ->
                        val direction = ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(product.id)
                        findNavController().navigate(direction)
                    }
@@ -67,6 +70,16 @@ class ProductListFragment: Fragment() {
 
     }
 
+
+    private fun bindCartObserver() {
+        cartObserver = Observer {
+            suggestedProductsAdapter?.notifyDataSetChanged()
+            verticalAdapter?.notifyDataSetChanged()
+        }
+
+        cartViewModel.cartItems.observe(viewLifecycleOwner, cartObserver)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         model.suggestedProducts.removeObserver(suggestedProductsObserver)
@@ -76,5 +89,13 @@ class ProductListFragment: Fragment() {
         suggestedProductsAdapter = null
         verticalAdapter = null
         binding = null
+    }
+
+    override fun onAddToCart(product: Product) {
+        cartViewModel.addToCart(product = product)
+    }
+
+    override fun onRemoveFromCart(product: Product) {
+        cartViewModel.removeToCart(product = product)
     }
 }

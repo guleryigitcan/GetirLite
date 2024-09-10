@@ -8,11 +8,18 @@ import coil.size.Scale
 import com.example.getirlite.R
 import com.example.getirlite.databinding.CellProductBinding
 import com.example.getirlite.model.product.Product
+import com.example.getirlite.view.fragments.StickyItemInteractionListener
 import com.example.getirlite.view.fragments.cart.CartViewModel
 
-class ProductListVerticalAdapter(private val model: CartViewModel, private val products: List<Product>, private val onClick: (Product) -> Unit)  : RecyclerView.Adapter<ProductListVerticalAdapter.ProductViewHolder>() {
+class ProductListVerticalAdapter(
+    private val listener: StickyItemInteractionListener,
+    private var products: List<Product>,
+    private val getCount: (Product) -> Int,
+    private val onClick: (Product) -> Unit
+) : RecyclerView.Adapter<ProductListVerticalAdapter.ProductViewHolder>() {
 
-    inner class ProductViewHolder(private val binding: CellProductBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ProductViewHolder(private val binding: CellProductBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun setData(product: Product) {
 
             binding.iconProduct.load(product.thumbnailURL) {
@@ -26,14 +33,21 @@ class ProductListVerticalAdapter(private val model: CartViewModel, private val p
             binding.labelProductPrice.text = product.priceText
             binding.labelProductAttribute.text = product.attribute
             binding.main.setOnClickListener { onClick(product) }
-            binding.stickyActions.set(model, product)
+            binding.stickyActions.set(listener = listener, product = product, count = getCount(product))
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder = ProductViewHolder(CellProductBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder =
+        ProductViewHolder(
+            CellProductBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
 
-    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) = holder.setData(product = products[position])
+    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) =
+        holder.setData(product = products[position])
 
     override fun getItemCount(): Int = products.size
-
 }

@@ -1,5 +1,6 @@
 package com.example.getirlite.view.fragments.cart
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,11 +8,18 @@ import coil.load
 import coil.size.Scale
 import com.example.getirlite.databinding.CellCartProductBinding
 import com.example.getirlite.model.product.Product
+import com.example.getirlite.view.fragments.StickyItemInteractionListener
 
-class CartItemsAdapter (private val model: CartViewModel, private val products: List<Product>, private val onClick: (Product) -> Unit)  : RecyclerView.Adapter<CartItemsAdapter.ProductViewHolder>() {
+class CartItemsAdapter(
+    private val listener: StickyItemInteractionListener,
+    private val products: List<Product>,
+    private val getCount: (Product) -> Int,
+    private val onClick: (Product) -> Unit
+) : RecyclerView.Adapter<CartItemsAdapter.ProductViewHolder>() {
 
     inner class ProductViewHolder(private val binding: CellCartProductBinding) : RecyclerView.ViewHolder(binding.root) {
         fun setData(product: Product) {
+            Log.println(Log.ASSERT, "ProductViewHolder", "${product.name}")
             val imageURL = (product.thumbnailURL ?: product.imageURL) ?: product.squareThumbnailURL
             binding.iconProduct.load(imageURL) {
                 crossfade(true)
@@ -25,7 +33,7 @@ class CartItemsAdapter (private val model: CartViewModel, private val products: 
             binding.labelProductAttribute.text = product.attribute
 
             binding.main.setOnClickListener { onClick(product) }
-            binding.stickyActions.set(model, product)
+            binding.stickyActions.set(listener = listener, product = product, count = getCount(product))
         }
     }
 
@@ -34,5 +42,4 @@ class CartItemsAdapter (private val model: CartViewModel, private val products: 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) = holder.setData(product = products[position])
 
     override fun getItemCount(): Int = products.size
-
 }

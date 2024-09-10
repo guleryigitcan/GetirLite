@@ -1,6 +1,7 @@
 package com.example.getirlite.view.fragments.cart
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -12,11 +13,12 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.getirlite.databinding.ControllerCartBinding
 import com.example.getirlite.model.product.Product
+import com.example.getirlite.view.fragments.StickyItemInteractionListener
 import com.example.getirlite.view.fragments.productList.ProductListViewModel
 import com.example.getirlite.view.fragments.productList.SuggestedProductsAdapter
 import java.text.DecimalFormat
 
-class CartFragment: Fragment() {
+class CartFragment: Fragment(), StickyItemInteractionListener {
     private var binding: ControllerCartBinding? = null
     private val productListViewModel: ProductListViewModel by activityViewModels()
     private val model: CartViewModel by activityViewModels()
@@ -39,7 +41,7 @@ class CartFragment: Fragment() {
         cartObserver = Observer { products ->
             products.let {
                 if (it.isNotEmpty()) {
-                    cartItemsAdapter = CartItemsAdapter(model, it) { product ->
+                    cartItemsAdapter = CartItemsAdapter(listener = this, products = it, getCount = model::getCount) { product ->
                         val direction = CartFragmentDirections.actionCartFragmentToProductDetailFragment(product.id)
                         findNavController().navigate(direction)
                     }
@@ -58,7 +60,7 @@ class CartFragment: Fragment() {
         suggestedProductsObserver = Observer { products ->
             products.let {
                 if (it.isNotEmpty()) {
-                    suggestedProductsAdapter = SuggestedProductsAdapter(model, it) { product ->
+                    suggestedProductsAdapter = SuggestedProductsAdapter(listener = this, products = it, getCount = model::getCount) { product ->
                         val direction = CartFragmentDirections.actionCartFragmentToProductDetailFragment(product.id)
                         findNavController().navigate(direction)
                     }
@@ -89,5 +91,14 @@ class CartFragment: Fragment() {
         cartItemsAdapter = null
         suggestedProductsAdapter = null
         binding = null
+    }
+
+    override fun onAddToCart(product: Product) {
+        model.addToCart(product)
+        Log.println(Log.ASSERT, "ProductViewHolder", "${product.name}")
+    }
+
+    override fun onRemoveFromCart(product: Product) {
+        model.removeToCart(product)
     }
 }
