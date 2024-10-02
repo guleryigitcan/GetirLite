@@ -1,5 +1,6 @@
 package com.example.getirlite.view.fragments.productDetail
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,16 +11,18 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import coil.load
 import coil.size.Scale
+import com.example.getirlite.R
 import com.example.getirlite.databinding.ControllerProductDetailBinding
+import com.example.getirlite.model.extension.AssetManager
 import com.example.getirlite.model.product.Product
+import com.example.getirlite.model.product.ProductDatabase
 import com.example.getirlite.view.fragments.StickyItemInteractionListener
 import com.example.getirlite.view.fragments.cart.CartFragmentDirections
 import com.example.getirlite.view.fragments.cart.CartViewModel
 import com.example.getirlite.view.fragments.productList.ProductListViewModel
-import com.example.getirlite.view.fragments.productList.SuggestedProductsAdapter
-import dagger.hilt.android.AndroidEntryPoint
+import com.example.getirlite.view.fragments.productList.components.SuggestedProductsAdapter
 
-@AndroidEntryPoint
+
 class ProductDetailFragment: Fragment(), StickyItemInteractionListener {
     private var binding: ControllerProductDetailBinding? = null
     private val model: ProductListViewModel by activityViewModels()
@@ -39,6 +42,9 @@ class ProductDetailFragment: Fragment(), StickyItemInteractionListener {
         val productId = arguments?.getString("productId") ?: return
 
         val product = model.findProductById(productId) ?: return
+
+        val isFavourite = ProductDatabase.isProductFavorite(productId = productId)
+
         binding.iconProduct.load(product.imageURL){
             crossfade(true)
             scale(Scale.FILL)
@@ -48,6 +54,19 @@ class ProductDetailFragment: Fragment(), StickyItemInteractionListener {
         binding.labelProductPrice.text = product.priceText
 
         binding.buttonAddToCart.set(cartViewModel, product)
+
+        binding.iconFavourite.setImageResource(if (isFavourite) R.drawable.ic_favorite else R.drawable.ic_favourite_outline)
+
+        binding.iconFavourite.setOnClickListener {
+            if (isFavourite) {
+                ProductDatabase.removeFavoriteProduct(productId)
+                binding.iconFavourite.setImageResource(R.drawable.ic_favourite_outline)
+            }
+            else {
+                ProductDatabase.addFavoriteProduct(product = product)
+                binding.iconFavourite.setImageResource(R.drawable.ic_favorite)
+            }
+        }
 
         suggestedProductsObserver = Observer { products ->
             products.let {

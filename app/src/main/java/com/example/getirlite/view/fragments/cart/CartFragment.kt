@@ -14,9 +14,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.getirlite.databinding.ControllerCartBinding
 import com.example.getirlite.model.product.Product
 import com.example.getirlite.view.fragments.StickyItemInteractionListener
+import com.example.getirlite.view.fragments.cart.components.CartItemsAdapter
 import com.example.getirlite.view.fragments.productList.ProductListViewModel
-import com.example.getirlite.view.fragments.productList.SuggestedProductsAdapter
+import com.example.getirlite.view.fragments.productList.components.SuggestedProductsAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
+
 
 class CartFragment: Fragment(), StickyItemInteractionListener {
     private var binding: ControllerCartBinding? = null
@@ -36,6 +39,11 @@ class CartFragment: Fragment(), StickyItemInteractionListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bindView()
+        bindCartObserver()
+    }
+
+    private fun bindView() {
         val binding = binding ?: return
 
         cartObserver = Observer { products ->
@@ -81,6 +89,14 @@ class CartFragment: Fragment(), StickyItemInteractionListener {
         }
     }
 
+    private fun bindCartObserver() {
+        cartObserver = Observer {
+            suggestedProductsAdapter?.notifyDataSetChanged()
+        }
+
+        model.cartItems.observe(viewLifecycleOwner, cartObserver)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         model.cartItems.removeObserver(cartObserver)
@@ -95,7 +111,6 @@ class CartFragment: Fragment(), StickyItemInteractionListener {
 
     override fun onAddToCart(product: Product) {
         model.addToCart(product)
-        Log.println(Log.ASSERT, "ProductViewHolder", "${product.name}")
     }
 
     override fun onRemoveFromCart(product: Product) {

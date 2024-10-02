@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="topBarHeight">70dp</dimen>
+    <dimen name="bottomBarHeight">70dp</dimen>
+    <dimen name="margin_huge">48dp</dimen>
+    <dimen name="margin_extra_extra_large">32dp</dimen>
+    <dimen name="margin_extra_large">24dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+    <dimen name="margin_medium">8dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_extra_small">2dp</dimen>
+    <dimen name="bottombar_margin">72dp</dimen>
 </resources>

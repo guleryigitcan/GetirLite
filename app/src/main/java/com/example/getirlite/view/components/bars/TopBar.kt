@@ -1,7 +1,8 @@
-package com.example.getirlite.view.components
+package com.example.getirlite.view.components.bars
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleOwner
@@ -32,9 +33,9 @@ class TopBar(context: Context, attrs: AttributeSet?) : ConstraintLayout(context,
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.labelControllerName.text = destination.label
-
-            binding.buttonCart.visibility = if (destination.id == R.id.cartFragment) GONE else VISIBLE
+            if (destination.id == R.id.cartFragment || destination.id == R.id.onboardingFragment) binding.buttonCart.visibility = GONE
             binding.iconDeleteCart.visibility = if (destination.id == R.id.cartFragment) VISIBLE else GONE
+            binding.iconExit.visibility = if (destination.id == R.id.onboardingFragment) GONE else VISIBLE
         }
 
         binding.iconExit.setOnClickListener {
@@ -43,7 +44,8 @@ class TopBar(context: Context, attrs: AttributeSet?) : ConstraintLayout(context,
 
         binding.iconDeleteCart.setOnClickListener { model.clearCart() }
 
-        cartObserver = Observer {
+        cartObserver = Observer { items ->
+            binding.buttonCart.visibility = if (items.isEmpty()) GONE else VISIBLE
             val decimalFormat = DecimalFormat("0.00")
             val priceText = "₺${decimalFormat.format(model.totalAmount)}"
             binding.labelTotalPrice.text = priceText

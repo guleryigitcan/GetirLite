@@ -1,5 +1,5 @@
 
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
@@ -7,6 +7,7 @@ plugins {
     id ("dagger.hilt.android.plugin")
     id ("com.google.dagger.hilt.android")
     id ("androidx.navigation.safeargs")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -36,6 +37,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
+    kotlin {
+        jvmToolchain(17)
+    }
+
     kotlinOptions {
         jvmTarget = "17"
     }
@@ -46,23 +52,34 @@ android {
 }
 
 dependencies {
-    implementation (libs.androidx.core.splashscreen)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.play.services.auth)
+
     implementation (libs.hilt.android)
+    implementation(libs.googleid)
     kapt (libs.hilt.compiler.v2432)
     kapt (libs.androidx.hilt.compiler)
-    implementation (libs.coil)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+
+    implementation (libs.lottie)
+
     implementation(libs.retrofit)
     implementation (libs.converter.gson)
     implementation (libs.okhttp)
+
+    implementation (libs.coil)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)
-    implementation(libs.androidx.navigation.fragment)
+
+    implementation (libs.androidx.core.splashscreen)
     implementation (libs.androidx.navigation.ui.ktx)
-    testImplementation(libs.junit)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     androidTestImplementation(libs.androidx.test.ext.junit)
+    testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
 }

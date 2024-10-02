@@ -60,7 +60,7 @@
     </LinearLayout>
 
 
-    <com.example.getirlite.view.components.StickyActionsCartItem
+    <com.example.getirlite.view.components.stickactions.StickyActionsCartItem
         android:id="@+id/sticky.actions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

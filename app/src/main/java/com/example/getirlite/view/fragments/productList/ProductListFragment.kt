@@ -12,9 +12,11 @@ import com.example.getirlite.databinding.ControllerProductListBinding
 import com.example.getirlite.model.product.Product
 import com.example.getirlite.view.fragments.StickyItemInteractionListener
 import com.example.getirlite.view.fragments.cart.CartViewModel
+import com.example.getirlite.view.fragments.productList.components.ProductListVerticalAdapter
+import com.example.getirlite.view.fragments.productList.components.SuggestedProductsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
+
 class ProductListFragment: Fragment(), StickyItemInteractionListener {
     private var binding: ControllerProductListBinding? = null
     private val model: ProductListViewModel by activityViewModels()

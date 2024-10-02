@@ -1,17 +1,16 @@
-package com.example.getirlite.view.components
+package com.example.getirlite.view.components.stickactions
 
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.getirlite.R
 import com.example.getirlite.databinding.ComponentStickyActionsCartItemBinding
+import com.example.getirlite.model.extension.AssetManager
 import com.example.getirlite.model.product.Product
 import com.example.getirlite.view.fragments.StickyItemInteractionListener
-import com.example.getirlite.view.fragments.cart.CartViewModel
 
 class StickyActionsCartItem(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
     private val binding = ComponentStickyActionsCartItemBinding.inflate(LayoutInflater.from(context), this, true)
@@ -27,10 +26,10 @@ class StickyActionsCartItem(context: Context, attrs: AttributeSet?) : Constraint
     private fun update(count: Int) {
         binding.labelProductCount.text = count.toString()
         if (count > 1) {
-            binding.iconDelete.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_minus))
+            binding.iconDelete.setImageDrawable(AssetManager.drawable(R.drawable.ic_minus))
             binding.iconDelete.imageTintList = ColorStateList.valueOf(context.getColor(R.color.blue))
         } else if (count == 1) {
-            binding.iconDelete.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_delete))
+            binding.iconDelete.setImageDrawable(AssetManager.drawable(R.drawable.ic_delete))
             binding.iconDelete.imageTintList = ColorStateList.valueOf(context.getColor(R.color.blue))
         }
     }

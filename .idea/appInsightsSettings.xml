@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.getirlite" />
+                  <option name="mobileSdkAppId" value="1:325450872893:android:23df2dfcf2477c159b1254" />
+                  <option name="projectId" value="getir-lite" />
+                  <option name="projectNumber" value="325450872893" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -1,4 +1,4 @@
-package com.example.getirlite.view.components
+package com.example.getirlite.view.components.stickactions
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -8,6 +8,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.getirlite.R
 import com.example.getirlite.databinding.ComponentStickyActionsSuggestedItemBinding
+import com.example.getirlite.model.extension.AssetManager
 import com.example.getirlite.model.product.Product
 import com.example.getirlite.view.fragments.cart.CartViewModel
 
@@ -43,12 +44,12 @@ class StickyActionsSuggestedItem(context: Context, attrs: AttributeSet?) : Const
         binding.buttonAddToCart.visibility = if (count == 0) VISIBLE else INVISIBLE
         binding.stickyActions.visibility = if (count > 0) VISIBLE else INVISIBLE
         if (count > 1) {
-            binding.iconDelete.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_minus))
+            binding.iconDelete.setImageDrawable(AssetManager.drawable(R.drawable.ic_minus))
             binding.iconDelete.imageTintList = ColorStateList.valueOf(context.getColor(R.color.blue))
             binding.labelProductCount.text = count.toString()
         }
         else if (count == 1) {
-            binding.iconDelete.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_delete))
+            binding.iconDelete.setImageDrawable(AssetManager.drawable(R.drawable.ic_delete))
             binding.iconDelete.imageTintList = ColorStateList.valueOf(context.getColor(R.color.blue))
             binding.labelProductCount.text = count.toString()
         }

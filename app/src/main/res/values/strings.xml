@@ -1,9 +1,67 @@
 <resources>
     <string name="app_name">Getir Lite</string>
-    <string name="addToCart">Sepete Ekle</string>
-    <string name="suggestedItems">Önerilen Ürünler</string>
-    <string name="completeCart">Sepeti Tamamla</string>
+
     <string name="productListFragmentLabel">Ürünler</string>
     <string name="productDetailFragmentLabel">Ürün Detayı</string>
     <string name="cartFragmentLabel">Sepetim</string>
+    <string name="searchFragmentLabel">Arama</string>
+    <string name="profileFragmentLabel">Profil</string>
+
+
+    <string name="addToCart">Sepete Ekle</string>
+    <string name="suggestedItems">Önerilen Ürünler</string>
+    <string name="completeCart">Sepeti Tamamla</string>
+    <string name="search_product">Ürün Ara</string>
+    <string name="popular_search">Popüler Aramalar</string>
+
+
+    <string name="profileItemLogin">Giriş Yap</string>
+    <string name="profileItemAddress">Adreslerim</string>
+    <string name="profileItemFavourite">Favori Ürünlerim</string>
+    <string name="profileItemHelp">Yardım</string>
+    <string name="profileItemLogout">Çıkış Yap</string>
+
+    <string name="continue_as_guest">Misafir Olarak Devam Et</string>
+    <string name="register">Register</string>
+    <string name="doYouHaveAccount">Hesabınız var mı?</string>
+    <string name="login">Giriş Yap</string>
+    <string name="start">Başla</string>
+    <string name="letsStart">Başlayalım!</string>
+    <string name="onboardingSheetExplanation">Hesap oluşturmak veya oturum açmak için bir yöntem seç</string>
+    <string name="signWithGoogle">Google ile devam et</string>
+    <string name="or">veya</string>
+
+<!--     TODO hide -->
+    <string name="default_web_client_id">325450872893-tt1hdh8qh2k7utph8iprkg19ahsaaj9v.apps.googleusercontent.com</string>
+
+    <string name="favouriteItemsFragmentLabel">Favori Ürünlerim</string>
+    <string name="noFavouriteItemsTitle">Henüz favori ürünün yok</string>
+    <string name="noFavouriteItemsBody">Bir ürünü favorilerine eklemek için ürün detayındaki kalp butonunua dokun.</string>
+
+
+    <string name="FAQSectionOrder">Siparişler</string>
+    <string name="FAQSectionPayment">Ödeme</string>
+    <string name="FAQSectionOffer">Kampanyalar ve İndirimler</string>
+    <string name="FAQSectionDelivery">Teslimat</string>
+    <string name="FAQSectionMembership">Üyelik</string>
+
+    <string name="FAQItemQuestionOrderTime">Siparişim ne zaman gelir?</string>
+    <string name="FAQItemQuestionOrderCancel">Siparişimi nasıl iptal edebilirim?</string>
+    <string name="FAQItemQuestionPaymentFail">Ödemem neden başarısız oldu?</string>
+    <string name="FAQItemQuestionPaymentReturn">İade süreci nasıl işler?</string>
+    <string name="FAQItemQuestionOfferCoupon">Kuponlar nasıl kullanılır?</string>
+    <string name="FAQItemQuestionOfferCode">İndirim kodum çalışmıyor, ne yapmalıyım?</string>
+    <string name="FAQItemQuestionDeliveryTime">Teslimat süresi neden değişiyor?</string>
+    <string name="FAQItemQuestionForgetPassword">Şifremi unuttum, nasıl sıfırlarım?</string>
+    <string name="FAQItemQuestionUpdateAccountInfo">Hesap bilgilerimi nasıl güncellerim?</string>
+
+    <string name="FAQItemAnswerOrderTime">Siparişiniz, bulunduğunuz bölgeye ve trafik durumuna göre ortalama 10–20 dakika içinde teslim edilir. Sipariş takibi için uygulamamızdaki "Siparişlerim" bölümünden takip edebilirsiniz.</string>
+    <string name="FAQItemAnswerOrderCancel">Siparişinizi verdikten sonra hemen iptal etmek isterseniz, "Siparişlerim" sayfasında "İptal Et" butonuna tıklayarak iptal edebilirsiniz. Eğer siparişiniz yola çıkmışsa iptal mümkün olmayabilir.</string>
+    <string name="FAQItemAnswerPaymentFail">Ödemenizin başarısız olma nedenleri arasında yetersiz bakiye, internet bağlantı sorunu veya ödeme sistemlerindeki geçici aksaklıklar olabilir. Kredi kartı bilgilerinizin doğru olduğundan emin olun ve tekrar deneyin.</string>
+    <string name="FAQItemAnswerPaymentReturn">Sipariş ettiğiniz ürünlerle ilgili bir sorun yaşarsanız, müşteri hizmetlerimizle iletişime geçebilir ve iade talebinde bulunabilirsiniz. İade süreci, ürünün durumu ve kategorisine göre değişiklik gösterebilir.</string>
+    <string name="FAQItemAnswerOfferCoupon">Sipariş sırasında ödeme ekranına geldiğinizde, kupon kodunuzu ilgili alana girerek indirimden faydalanabilirsiniz. Her kupon, belirli kampanya koşulları çerçevesinde kullanılabilir.</string>
+    <string name="FAQItemAnswerOfferCode">İndirim kodunuzun süresinin dolmadığından ve kampanya koşullarını sağladığınızdan emin olun. Eğer sorun devam ediyorsa, müşteri hizmetleriyle iletişime geçebilirsiniz.</string>
+    <string name="FAQItemAnswerDeliveryTime">Teslimat süresi, trafik, hava durumu ve yoğunluk gibi faktörlere bağlı olarak değişiklik gösterebilir. Uygulamadaki sipariş takip ekranından canlı olarak durumunu kontrol edebilirsiniz.</string>
+    <string name="FAQItemAnswerForgetPassword">"Şifremi Unuttum" bölümüne tıklayarak kayıtlı e-posta adresinize gelen sıfırlama bağlantısıyla şifrenizi yenileyebilirsiniz.</string>
+    <string name="FAQItemAnswerUpdateAccountInfo">Profilinizdeki "Hesap Ayarları" bölümünden ad, adres, telefon numarası gibi bilgilerinizi güncelleyebilirsiniz.</string>
 </resources>

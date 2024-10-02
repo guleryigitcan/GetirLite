@@ -15,6 +15,10 @@ class ProductListViewModel @Inject constructor(): ViewModel() {
     val verticalProducts: MutableLiveData<List<Product>> = MutableLiveData(listOf())
     val suggestedProducts: MutableLiveData<List<Product>> = MutableLiveData(listOf())
 
+    init {
+        fetch()
+    }
+
     fun fetch() {
         viewModelScope.launch {
             try {

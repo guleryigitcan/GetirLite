@@ -6,40 +6,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler.cart.items"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:orientation="vertical"
-        tools:itemCount="3"
-        tools:listitem="@layout/cell_cart_product"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="0.dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/button.checkout">
 
-    <TextView
-        android:id="@+id/label.suggested.items"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginVertical="8dp"
-        android:text="@string/suggestedItems"
-        android:textSize="12sp"
-        android:textColor="@color/textDark"
-        android:fontFamily="@font/font_semibold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recycler.cart.items"
-        app:layout_constraintBottom_toTopOf="@id/label.suggested.items" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler.suggested.items"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:orientation="horizontal"
-        tools:listitem="@layout/cell_product"
-        tools:itemCount="6"
-        app:layout_constraintTop_toBottomOf="@id/label.suggested.items" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler.cart.items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical"
+                tools:itemCount="3"
+                tools:listitem="@layout/cell_cart_product"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/label.suggested.items"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginVertical="8dp"
+                android:text="@string/suggestedItems"
+                android:textSize="12sp"
+                android:textColor="@color/textDark"
+                android:fontFamily="@font/font_semibold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recycler.cart.items"
+                app:layout_constraintBottom_toTopOf="@id/label.suggested.items" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler.suggested.items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="horizontal"
+                tools:listitem="@layout/cell_product"
+                tools:itemCount="6"
+                app:layout_constraintTop_toBottomOf="@id/label.suggested.items" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,7 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="24.dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="@dimen/bottomBarHeight"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -106,6 +121,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

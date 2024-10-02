@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="12dp"
+        android:inputType="text"
+        android:background="@drawable/bg_search_edit_text"
+        android:imeOptions="actionSearch"
+        android:hint="@string/search_product"
+        android:fontFamily="@font/font_semibold"
+        android:elevation="@dimen/margin_medium"
+        android:maxHeight="38dp"
+        android:maxLines="1"
+        android:visibility="visible"
+        android:drawablePadding="@dimen/margin_small"
+        android:paddingStart="@dimen/margin_medium"
+        android:drawableStart="@drawable/ic_search"
+        android:drawableTint="@color/blue"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/label.popular.search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        android:text="@string/popular_search"
+        android:textSize="12sp"
+        android:textColor="@color/textDark"
+        android:fontFamily="@font/font_semibold"
+        app:layout_constraintTop_toBottomOf="@id/search"
+        app:layout_constraintBottom_toTopOf="@id/recycler.popular.search"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler.popular.search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:paddingVertical="@dimen/margin_medium"
+        android:elevation="@dimen/margin_medium"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@id/label.popular.search"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        tools:listitem="@layout/cell_search_words"
+        tools:itemCount="6"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler.search.items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:elevation="@dimen/margin_medium"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@id/label.popular.search"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        android:orientation="horizontal"
+        tools:listitem="@layout/cell_product"
+        tools:itemCount="6"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

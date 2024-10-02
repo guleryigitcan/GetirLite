@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:ignore="ContentDescription">
 
     <LinearLayout
         android:id="@+id/layout.product.attributes"
@@ -62,6 +63,16 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/icon_favourite"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_favourite_outline"
+        app:tint="@color/blue"
+        android:layout_margin="@dimen/margin_large"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <TextView
         android:id="@+id/label.suggested.items"
         android:layout_width="wrap_content"
@@ -81,16 +92,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="horizontal"
         tools:listitem="@layout/cell_product"
         tools:itemCount="6"
         app:layout_constraintTop_toBottomOf="@id/label.suggested.items" />
 
-    <com.example.getirlite.view.components.StickyActionsSuggestedItem
+    <com.example.getirlite.view.components.stickactions.StickyActionsSuggestedItem
         android:id="@+id/button.add.to.cart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/bottomBarHeight"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
