@@ -5,9 +5,9 @@
  * ✔ Hilt for DI
  * ✔ Navigation Component
  * ✔ View-Binding
- * ✔ Detail Page
- * ✔ Retrofit
- * ✔ Okhttp
+ * ✔ Clean Architecture
+ * ✔ Single Activity Architecture
+ * ✔ MVVM
 
 # Screenshots
 
