@@ -11,10 +11,11 @@
 
     <ImageView
         android:id="@+id/icon.exit"
-        android:layout_width="24.dp"
-        android:layout_height="24.dp"
-        android:layout_marginStart="8dp"
-        android:src="@drawable/ic_exit"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/margin_large"
+        android:src="@drawable/ic_arrow_forward"
+        android:rotation="180"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,7 +27,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="14.sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,9 +39,9 @@
 
     <LinearLayout
         android:id="@+id/button.cart"
-        android:layout_width="90.dp"
-        android:layout_height="34.dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="90dp"
+        android:layout_height="34dp"
+        android:layout_marginEnd="@dimen/margin_large"
         android:background="@drawable/button_rounded_primary"
         android:gravity="center_vertical"
         android:orientation="horizontal"

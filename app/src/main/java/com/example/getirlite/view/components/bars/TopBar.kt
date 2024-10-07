@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
+import com.example.getirlite.MainActivity
 import com.example.getirlite.R
 import com.example.getirlite.databinding.ComponentTopBarBinding
 import com.example.getirlite.model.product.Product
@@ -33,12 +34,14 @@ class TopBar(context: Context, attrs: AttributeSet?) : ConstraintLayout(context,
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.labelControllerName.text = destination.label
+
             if (destination.id == R.id.cartFragment || destination.id == R.id.onboardingFragment) binding.buttonCart.visibility = GONE
             binding.iconDeleteCart.visibility = if (destination.id == R.id.cartFragment) VISIBLE else GONE
             binding.iconExit.visibility = if (destination.id == R.id.onboardingFragment) GONE else VISIBLE
         }
 
         binding.iconExit.setOnClickListener {
+            if (!navController.popBackStack() && navController.currentDestination == null) MainActivity.instance.finish()
             navController.popBackStack()
         }
 

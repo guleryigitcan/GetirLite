@@ -3,6 +3,7 @@ package com.example.getirlite.view.fragments.onboarding
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.getirlite.BuildConfig
 import com.example.getirlite.MainActivity
 import com.example.getirlite.R
 import com.example.getirlite.model.User
@@ -33,9 +34,10 @@ class AccountManager @Inject constructor(): ViewModel() {
 
     fun googleLogin() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(AssetManager.string(R.string.default_web_client_id))
+            .requestIdToken(BuildConfig.DEFAULT_WEB_CLIENT_ID)
             .requestEmail()
             .build()
+
 
         val googleClient = GoogleSignIn.getClient(MainActivity.instance, gso)
 
@@ -51,7 +53,6 @@ class AccountManager @Inject constructor(): ViewModel() {
             login(credential)
         } catch (e: ApiException) {
             e.printStackTrace()
-            Log.println(Log.ASSERT, "error", e.message.toString())
             notLoggedIn()
         }
     }

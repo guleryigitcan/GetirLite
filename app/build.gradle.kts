@@ -1,3 +1,5 @@
+import java.io.FileInputStream
+import java.util.Properties
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
@@ -20,6 +22,19 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
+        val secretsPropertiesFile = rootProject.file("secrets.properties")
+        val secretsProperties = Properties()
+        if (secretsPropertiesFile.exists()) {
+            secretsProperties.load(FileInputStream(secretsPropertiesFile))
+        }
+
+
+        buildConfigField(
+            "String",
+            "DEFAULT_WEB_CLIENT_ID",
+            "\"${secretsProperties["DEFAULT_WEB_CLIENT_ID"]}\""
+        )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -48,6 +63,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 

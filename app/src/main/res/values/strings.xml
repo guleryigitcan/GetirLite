@@ -31,9 +31,6 @@
     <string name="signWithGoogle">Google ile devam et</string>
     <string name="or">veya</string>
 
-<!--     TODO hide -->
-    <string name="default_web_client_id">325450872893-tt1hdh8qh2k7utph8iprkg19ahsaaj9v.apps.googleusercontent.com</string>
-
     <string name="favouriteItemsFragmentLabel">Favori Ürünlerim</string>
     <string name="noFavouriteItemsTitle">Henüz favori ürünün yok</string>
     <string name="noFavouriteItemsBody">Bir ürünü favorilerine eklemek için ürün detayındaki kalp butonunua dokun.</string>

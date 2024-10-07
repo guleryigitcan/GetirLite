@@ -1,15 +1,18 @@
 package com.example.getirlite.view.components.bars
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.NavController
 import com.example.getirlite.R
 import com.example.getirlite.databinding.ComponentBottomBarBinding
+import com.example.getirlite.model.extension.AssetManager
 
-class BottomBar(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs)  {
-    private val binding = ComponentBottomBarBinding.inflate(LayoutInflater.from(context), this, true)
+class BottomBar(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
+    private val binding =
+        ComponentBottomBarBinding.inflate(LayoutInflater.from(context), this, true)
     private lateinit var navController: NavController
 
     fun set(navController: NavController) {
@@ -33,7 +36,12 @@ class BottomBar(context: Context, attrs: AttributeSet?) : ConstraintLayout(conte
                 navController.navigate(R.id.action_global_profileFragment)
         }
         navController.addOnDestinationChangedListener { _, destination, _ ->
-          if (hasBottomBar(destination.id)) show() else hide()
+            if (hasBottomBar(destination.id)) show()
+            else hide()
+
+            binding.iconHome.imageTintList = ColorStateList.valueOf(AssetManager.color(if (destination.id == R.id.productListFragment) R.color.blue else R.color.grayDark))
+            binding.iconSearch.imageTintList = ColorStateList.valueOf(AssetManager.color(if (destination.id == R.id.searchFragment) R.color.blue else R.color.grayDark))
+            binding.iconProfile.imageTintList = ColorStateList.valueOf(AssetManager.color(if (destination.id == R.id.profileFragment) R.color.blue else R.color.grayDark))
         }
     }
 
@@ -53,7 +61,12 @@ class BottomBar(context: Context, attrs: AttributeSet?) : ConstraintLayout(conte
             .start()
     }
 
-    private fun hasBottomBar(id: Int): Boolean = listOf(R.id.cartFragment, R.id.searchFragment, R.id.productListFragment, R.id.profileFragment).contains(id)
+    private fun hasBottomBar(id: Int): Boolean = listOf(
+        R.id.cartFragment,
+        R.id.searchFragment,
+        R.id.productListFragment,
+        R.id.profileFragment
+    ).contains(id)
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()

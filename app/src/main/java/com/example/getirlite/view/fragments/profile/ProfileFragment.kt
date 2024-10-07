@@ -2,6 +2,7 @@ package com.example.getirlite.view.fragments.profile
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,6 +44,7 @@ class ProfileFragment: Fragment() {
         binding.recyclerUserInfo.adapter = profileItemUserInfoAdapter
 
         binding.recyclerButtons.adapter = ProfileItemAdapter(items = ProfileItem.buttons) { profileItem ->
+            Log.println(Log.ASSERT, profileItem.name, "click")
             when (profileItem) {
                 ProfileItem.login -> {
                     OnboardingSheet().show(MainActivity.instance.supportFragmentManager, "OnboardingSheet")
