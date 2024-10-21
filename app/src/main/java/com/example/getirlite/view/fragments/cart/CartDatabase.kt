@@ -1,13 +1,9 @@
 package com.example.getirlite.view.fragments.cart
 
-import android.content.Context
-import android.content.SharedPreferences
-import android.util.Log
 import com.example.getirlite.model.User
 import com.example.getirlite.model.product.Product
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,7 +20,6 @@ class CartDatabase @Inject constructor() {
         } catch (_: Exception) {
             emptyList()
         }
-
     }
 
     fun save(cartItems: List<Product>) {

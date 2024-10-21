@@ -1,9 +1,7 @@
 package com.example.getirlite.model
 
-import com.example.getirlite.view.fragments.cart.CartDatabase
 import org.json.JSONArray
 import org.json.JSONObject
-import java.time.LocalDateTime
 
 enum class User {
     userId, userName, email, phone,

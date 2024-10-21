@@ -1,67 +1,124 @@
 package com.example.getirlite.view.components.bars
 
-import android.content.Context
-import android.util.AttributeSet
-import android.util.Log
-import android.view.LayoutInflater
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
+import android.icu.text.DecimalFormat
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBackIos
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.getirlite.MainActivity
 import com.example.getirlite.R
-import com.example.getirlite.databinding.ComponentTopBarBinding
-import com.example.getirlite.model.product.Product
+import com.example.getirlite.view.Controllers
+import com.example.getirlite.view.NavigationItem
+import com.example.getirlite.view.components.widgets.SimpleText
+import com.example.getirlite.model.extension.padding
 import com.example.getirlite.view.fragments.cart.CartViewModel
-import java.text.DecimalFormat
 
-class TopBar(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
-    private val binding = ComponentTopBarBinding.inflate(LayoutInflater.from(context), this, true)
-    private lateinit var navController: NavController
-    private lateinit var model: CartViewModel
-    private lateinit var cartObserver: Observer<List<Product>>
+@Composable
+fun TopBar(navController: NavController) {
+    val cartViewModel: CartViewModel = hiltViewModel(viewModelStoreOwner = MainActivity.instance)
+    val cartItems by cartViewModel.cartItems.collectAsState()
+    val totalAmount by cartViewModel.totalAmount.collectAsState()
 
-    fun set(navController: NavController, cartViewModel: CartViewModel) {
-        this.navController = navController
-        this.model = cartViewModel
-        bindView()
-    }
+    val controller = remember { Controllers.parse(navController.currentDestination?.route ?: "") }
 
-    private fun bindView() {
-        binding.buttonCart.setOnClickListener {
-            if (!model.isCartEmpty) navController.navigate(R.id.action_global_cartFragment)
+    Box(
+        contentAlignment = Alignment.Center
+    ){
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(height = 70.dp)
+                .background(color = Color.Blue)
+        ) {
+            Image(
+                imageVector = Icons.AutoMirrored.Rounded.ArrowBackIos,
+                contentDescription = "",
+                colorFilter = ColorFilter.tint(color = Color.White),
+                modifier = Modifier
+                    .padding(start = Dp.padding)
+                    .size(24.dp)
+                    .clickable(
+                        onClick = {
+                            navController.popBackStack()
+                        },
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null
+                    )
+
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            if (cartItems.isNotEmpty())
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier
+                        .padding(end = Dp.padding)
+                        .width(width = 90.dp)
+                        .background(color = Color.White, shape = RoundedCornerShape(12.dp))
+                        .clickable(
+                            onClick = {
+                                navController.navigate(NavigationItem.Cart.route)
+                            },
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null
+                        )
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_cart),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(34.dp)
+                    )
+
+                    SimpleText(
+                        text = "₺${DecimalFormat("0.00").format(totalAmount)}",
+                        color = Color.Blue,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1
+                    )
+                }
+
         }
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            binding.labelControllerName.text = destination.label
-
-            if (destination.id == R.id.cartFragment || destination.id == R.id.onboardingFragment) binding.buttonCart.visibility = GONE
-            binding.iconDeleteCart.visibility = if (destination.id == R.id.cartFragment) VISIBLE else GONE
-            binding.iconExit.visibility = if (destination.id == R.id.onboardingFragment) GONE else VISIBLE
-        }
-
-        binding.iconExit.setOnClickListener {
-            if (!navController.popBackStack() && navController.currentDestination == null) MainActivity.instance.finish()
-            navController.popBackStack()
-        }
-
-        binding.iconDeleteCart.setOnClickListener { model.clearCart() }
-
-        cartObserver = Observer { items ->
-            binding.buttonCart.visibility = if (items.isEmpty()) GONE else VISIBLE
-            val decimalFormat = DecimalFormat("0.00")
-            val priceText = "₺${decimalFormat.format(model.totalAmount)}"
-            binding.labelTotalPrice.text = priceText
-        }
-
-        model.cartItems.observe(context as LifecycleOwner, cartObserver)
-    }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        binding.buttonCart.setOnClickListener(null)
-        binding.iconExit.setOnClickListener(null)
-        binding.iconDeleteCart.setOnClickListener(null)
-        model.cartItems.removeObserver(cartObserver)
+        SimpleText(
+            text = controller.title,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White,
+            textAlign = TextAlign.Center
+        )
     }
 }

@@ -22,14 +22,17 @@ object ProductDatabase {
         if (favoriteProducts.none { it.id == product.id }) {
             favoriteProducts.add(product)
         }
-        val json = gson.toJson(favoriteProducts)
-        User.favouriteProducts.set(json)
+        save(favoriteProducts)
     }
 
     fun removeFavoriteProduct(productId: String) {
         val favoriteProducts = loadFavoriteProducts().toMutableList()
         favoriteProducts.removeAll { it.id == productId }
-        val json = gson.toJson(favoriteProducts)
+        save(favoriteProducts)
+    }
+
+    private fun save(products: List<Product>) {
+        val json = gson.toJson(products)
         User.favouriteProducts.set(json)
     }
 

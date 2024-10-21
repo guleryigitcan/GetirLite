@@ -1,13 +1,10 @@
 package com.example.getirlite.view.fragments.onboarding
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.getirlite.BuildConfig
 import com.example.getirlite.MainActivity
-import com.example.getirlite.R
 import com.example.getirlite.model.User
-import com.example.getirlite.model.extension.AssetManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -17,11 +14,12 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class AccountManager @Inject constructor(): ViewModel() {
-    val isLoggedIn = MutableLiveData(false)
+    val isLoggedIn = MutableStateFlow(false)
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     fun start() {
@@ -37,7 +35,7 @@ class AccountManager @Inject constructor(): ViewModel() {
             .requestIdToken(BuildConfig.DEFAULT_WEB_CLIENT_ID)
             .requestEmail()
             .build()
-
+        Log.println(Log.ASSERT, "signed in", BuildConfig.DEFAULT_WEB_CLIENT_ID)
 
         val googleClient = GoogleSignIn.getClient(MainActivity.instance, gso)
 
@@ -48,7 +46,6 @@ class AccountManager @Inject constructor(): ViewModel() {
     fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)
-            Log.println(Log.ASSERT, "signed in", account.email.toString())
             val credential = GoogleAuthProvider.getCredential(account.idToken, null)
             login(credential)
         } catch (e: ApiException) {

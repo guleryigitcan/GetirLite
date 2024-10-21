@@ -2,30 +2,33 @@ package com.example.getirlite
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.fragment.app.commit
-import androidx.navigation.fragment.NavHostFragment
-import com.example.getirlite.databinding.ActivityMainBinding
-import com.example.getirlite.view.fragments.onboarding.AccountManager
-import com.example.getirlite.model.User
+import androidx.navigation.compose.rememberNavController
+import com.example.getirlite.ui.theme.GetirLiteTheme
+import com.example.getirlite.view.AppNavHost
+import com.example.getirlite.view.components.bars.BottomBar
 import com.example.getirlite.view.fragments.cart.CartViewModel
+import com.example.getirlite.view.fragments.onboarding.AccountManager
 import com.example.getirlite.view.fragments.productList.ProductListViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
-
-    private val productViewModel: ProductListViewModel by viewModels()
-    private val cartViewModel: CartViewModel by viewModels()
-    private val accountManager: AccountManager by viewModels()
+class MainActivity : ComponentActivity() {
+    val productListViewModel: ProductListViewModel by viewModels()
+    val cartViewModel: CartViewModel by viewModels()
+    val accountManager: AccountManager by viewModels()
 
     init {
         instance = this
@@ -33,32 +36,34 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         installSplashScreen()
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContent {
+            val navController = rememberNavController()
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment
-
-        val navController = navHostFragment.navController
-        val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
-
-        if (User.didSeeOnboarding.bool) navGraph.setStartDestination(R.id.productListFragment)
-         else navGraph.setStartDestination(R.id.onboardingFragment)
-
-        navController.graph = navGraph
-
-        accountManager.start()
-
-        binding.topBar.set(navController, cartViewModel)
-        binding.bottomBar.set(navController)
-    }
-
-    var googleResult: ActivityResultLauncher<Intent> = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == RESULT_OK) {
-                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-                accountManager.handleSignInResult(task)
+            GetirLiteTheme {
+                Box(
+                    contentAlignment = Alignment.TopCenter
+                ) {
+                    Column {
+                        AppNavHost(
+                            modifier = Modifier.weight(1f),
+                            navController = navController
+                        )
+                        BottomBar(navController = navController)
+                    }
+                }
             }
         }
+    }
+
+    var googleResult: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if (result.resultCode == RESULT_OK) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            accountManager.handleSignInResult(task)
+        }
+    }
 
     companion object {
         lateinit var instance: MainActivity

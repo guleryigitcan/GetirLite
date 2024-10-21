@@ -1,17 +1,26 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<!--    &lt;!&ndash; Base application theme. &ndash;&gt;-->
     <style name="Base.Theme.GetirLite" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:fontFamily">@font/font_regular</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
-    <style name="Theme.GetirLite" parent="Base.Theme.GetirLite" />
+<!--    <style name="Theme.GetirLite" parent="Base.Theme.GetirLite" />-->
 
     <style name="Theme.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/blue</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo</item>
         <item name="android:windowSplashScreenBehavior" tools:targetApi="TIRAMISU">icon_preferred</item>
+
         <item name="postSplashScreenTheme">@style/Base.Theme.GetirLite</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 </resources>

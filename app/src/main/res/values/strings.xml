@@ -61,4 +61,5 @@
     <string name="FAQItemAnswerDeliveryTime">Teslimat süresi, trafik, hava durumu ve yoğunluk gibi faktörlere bağlı olarak değişiklik gösterebilir. Uygulamadaki sipariş takip ekranından canlı olarak durumunu kontrol edebilirsiniz.</string>
     <string name="FAQItemAnswerForgetPassword">"Şifremi Unuttum" bölümüne tıklayarak kayıtlı e-posta adresinize gelen sıfırlama bağlantısıyla şifrenizi yenileyebilirsiniz.</string>
     <string name="FAQItemAnswerUpdateAccountInfo">Profilinizdeki "Hesap Ayarları" bölümünden ad, adres, telefon numarası gibi bilgilerinizi güncelleyebilirsiniz.</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>
