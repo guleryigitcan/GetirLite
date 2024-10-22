@@ -1,7 +1,8 @@
 # Getir Lite
 
 # Key features
- 
+
+ * ✔ Compose branch added.
  * ✔ Hilt for DI
  * ✔ Navigation Component
  * ✔ View-Binding
